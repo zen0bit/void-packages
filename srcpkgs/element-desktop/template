@@ -1,20 +1,28 @@
 # Template file for 'element-desktop'
 pkgname=element-desktop
-version=1.7.4
-revision=3
+version=1.7.7
+revision=1
 wrksrc="element-web-${version}"
 conf_files="/etc/${pkgname}/config.json"
-hostmakedepends="git yarn nodejs rust cargo python sqlcipher-devel curl libappindicator-devel libnotify-devel pkg-config"
+hostmakedepends="git yarn nodejs rust cargo python curl
+ sqlcipher-devel libappindicator-devel libnotify-devel pkg-config
+ app-builder"
 makedepends="libsecret-devel"
-depends="c-ares ffmpeg gtk+3 http-parser libevent libxslt minizip nss re2 snappy sqlcipher electron9"
+depends="c-ares ffmpeg gtk+3 http-parser libevent
+ libxslt minizip nss re2 snappy sqlcipher electron9"
 short_desc="Glossy Matrix collaboration client, desktop version"
 maintainer="projectmoon <projectmoon@agnos.is>"
 license="Apache-2.0"
 homepage="https://element.io"
-distfiles="https://github.com/vector-im/element-desktop/archive/v${version}.tar.gz>element-desktop.tar.gz https://github.com/vector-im/element-web/archive/v${version}.tar.gz>element-web.tar.gz"
-checksum="e9f5855e432841aa503f3a2e85073c466992e1a28b697b21cb370485c6c4aa35
- 96b38a348bc7ba1530171aa730f8a02a469fb5e57e524034ebd2768ed21f1c97"
-nocross=yes
+_ghpage="https://github.com/vector-im"
+_archive="archive/v${version}.tar.gz"
+distfiles="${_ghpage}/element-desktop/${_archive}>element-desktop.tar.gz
+ ${_ghpage}/element-web/${_archive}>element-web.tar.gz"
+checksum="f9ee1c537c610c29ca3c2c358f76a2cb7126e557d72d3e4fe4cdaf18823dbbb4
+ 6e378b49bab4609e7128c49471c72c00ac7e7f7ff2fe2f3427e29f453af679fb"
+nocross="depends on electron9"
+
+export USE_SYSTEM_APP_BUILDER=true
 
 pre_build() {
 	# Build dependencies for riot-web
@@ -32,7 +40,14 @@ do_build() {
 	yarn build
 	cd ../element-desktop-${version}
 	yarn run build:native
-	yarn run build
+	# normally just "yarn run build" would be okay, but at least on ppc64
+	# we need to force x86_64 arch as electron-builder does not support
+	# ppc64 and fails on arch detection; ARM is supported so just use build
+	case "$XBPS_TARGET_MACHINE" in
+		x86_64*|ppc64*) yarn run build64 ;;
+		i686*) yarn run build32 ;;
+		*) yarn run build ;;
+	esac
 }
 
 do_install() {

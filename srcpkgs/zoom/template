@@ -1,6 +1,6 @@
 # Template file for 'zoom'
 pkgname=zoom
-version=5.2.446620.0816
+version=5.3.469451.0927
 revision=1
 archs="x86_64"
 wrksrc=zoom
@@ -11,7 +11,7 @@ maintainer="Daniel Santana <daniel@santana.tech>"
 license="custom:Proprietary"
 homepage="https://zoom.us/"
 distfiles="https://zoom.us/client/${version}/zoom_x86_64.pkg.tar.xz"
-checksum=23c535e99ec332af12e064922895e140e5ee33ea7775df6d623ab379a4362aba
+checksum=afe1fd1c9cf43135b694aa9239b33afd233487daa7fe24111d69c66197e009fb
 repository=nonfree
 noshlibprovides=yes
 noverifyrdeps=yes

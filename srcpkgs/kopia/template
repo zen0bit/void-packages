@@ -1,0 +1,14 @@
+# Template file for 'kopia'
+pkgname=kopia
+version=0.7.2
+revision=1
+build_style=go
+go_import_path=github.com/kopia/kopia
+go_ldflags="-X ${go_import_path}/repo.BuildVersion=${version}
+ -X '${go_import_path}/repo.BuildInfo=Void Linux'"
+short_desc="Fast and secure backup tool"
+maintainer="Daniel Eyßer <daniel.eysser@gmail.com>"
+license="Apache-2.0"
+homepage="https://kopia.io/"
+distfiles="https://github.com/kopia/kopia/archive/v${version}.tar.gz"
+checksum=a060a0e057e71d9961416ad6763004b9a34c13a4526ae6882cf8969c2c7d96a3

@@ -1,20 +1,19 @@
 # Template file for 'youtube-viewer'
 pkgname=youtube-viewer
-version=3.7.7
-revision=1
-archs=noarch
+version=3.7.9
+revision=2
 build_style=perl-ModuleBuild
 configure_args="--gtk"
 hostmakedepends="perl-Module-Build"
 makedepends="perl"
-depends="perl-Data-Dump perl-JSON perl-LWP-Protocol-https"
+depends="perl-Data-Dump perl-JSON perl-LWP-Protocol-https perl-Term-ReadLine-Gnu"
 short_desc="Command-line client to search and stream from YouTube"
 maintainer="Duncaen <duncaen@voidlinux.org>"
 license="Artistic-2.0"
 homepage="https://github.com/trizen/youtube-viewer"
 changelog="https://github.com/trizen/youtube-viewer/releases"
 distfiles="https://github.com/trizen/youtube-viewer/archive/${version}.tar.gz"
-checksum=dc2a0c00d97aaeede3d15b7b2faf2c56371ca951839264108ecbc64b58d21deb
+checksum=c73c4b2f2bc0e3235ae04276a5a632b0d0b6dc8df36033473b7b150bcbf81bc0
 
 gtk-youtube-viewer_package() {
 	depends="${sourcepkg}-${version}_${revision} perl-Gtk2 perl-File-ShareDir"
